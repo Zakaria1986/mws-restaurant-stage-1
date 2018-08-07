@@ -1,4 +1,3 @@
-
 /**
  * Common database helper functions.
  */
@@ -9,7 +8,7 @@ class DBHelper {
    * Change this to restaurants.json file location on your server.
    */
   static get DATABASE_URL() {
-    const port = 1337 // Change this to your server port
+    const port = 1337; // Change this to your server port
     return `http://localhost:${port}/restaurants`;
   }
 
@@ -17,24 +16,25 @@ class DBHelper {
    * Fetch all restaurants.
    */
   static fetchRestaurants(callback) {
-
-    fetch(DBHelper.DATABASE_URL)
-    .then(response =>{
-      response.json()
-      .then(restaurants => console.log(restaurants));
-        callback(restaurants);
-    })
-    .catch(error =>{
-      callback(`Request failed${error}`);
-    })
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', DBHelper.DATABASE_URL);
+    xhr.onload = () => {
+      if (xhr.status === 200) { // Got a success response from server!
+        const json = JSON.parse(xhr.responseText);
+        const restaurants = json.restaurants;
+        callback(null, restaurants);
+      } else { // Oops!. Got an error from server.
+        const error = (`Request failed. Returned status of ${xhr.status}`);
+        callback(error, null);
+      }
+    };
+    xhr.send();
   }
 
-
-/// everything above that needs to be changed ////
   /**
    * Fetch a restaurant by its ID.
    */
-     static fetchRestaurantById(id, callback) {
+  static fetchRestaurantById(id, callback) {
     // fetch all restaurants with proper error handling.
     DBHelper.fetchRestaurants((error, restaurants) => {
       if (error) {
@@ -50,6 +50,9 @@ class DBHelper {
     });
   }
 
+  /**
+   * Fetch restaurants by a cuisine type with proper error handling.
+   */
   static fetchRestaurantByCuisine(cuisine, callback) {
     // Fetch all restaurants  with proper error handling
     DBHelper.fetchRestaurants((error, restaurants) => {
