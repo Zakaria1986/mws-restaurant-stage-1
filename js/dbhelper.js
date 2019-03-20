@@ -1,32 +1,49 @@
-/**
+/*
  * Common database helper functions.
  */
 class DBHelper {
-
   /**
    * Database URL.
    * Change this to restaurants.json file location on your server.
    */
   static get DATABASE_URL() {
-    const port = 1337; // Change this to your server port
+    const port = 1337 // Change this to your server port
     return `http://localhost:${port}/restaurants`;
   }
 
-  /**
-   * Fetch all restaurants.
-   */
-  static fetchRestaurants(callback, id) {
-     let fetchURL = DBHelper.DATABASE_URL + '/' + id
-    fetch(fetchURL)
-    .then(response =>{
-      response.json()
-      .then(restaurants => console.log(restaurants));
-        callback(null, restaurants);
-    })
-    .catch(error =>{
-      callback(`Request failed${error}`, null);
-    })
-  }
+ /* static openIDB(){
+    let idbopen = idb.open('restaurantidb', 1, upgradeDB=>{
+    return upgradeDB.createObjectStore('restaurants', {keyPath: 'id'});
+    });
+    return idbopen;
+  }*/
+
+static fetchRestaurants(callback) {
+
+          // const idbcall = DBHelper.openIDB();
+          return fetch(DBHelper.DATABASE_URL)
+          .then((response) => response.json())
+          .then((restaurants) =>{
+            console.log('Response',restaurants);
+            callback(null, restaurants);
+            DBHelper.openIndexDB(restaurants);
+        })
+          .catch( error => callback(error, null));
+        }
+
+        static openIndexDB(restaurants){
+          let dbPromise = idb.open('udacity-stage-2', 1, (upgradeDB) =>{
+            upgradeDB.createObjectStore('restaurants', {keyPath: 'id'})
+          });
+
+          return dbPromise.then((db)=>{
+            let txt = db.transaction('restaurants', 'readwrite');
+            let store = objectStore('restaurants');
+            restaurants.forEach((restaurant =>{
+              store.put(restaurant);
+            }));
+          });
+        }
 
   /**
    * Fetch a restaurant by its ID.
@@ -45,7 +62,7 @@ class DBHelper {
         }
       }
     });
-  };
+  }
 
   /**
    * Fetch restaurants by a cuisine type with proper error handling.
@@ -147,7 +164,7 @@ class DBHelper {
    * Restaurant image URL.
    */
   static imageUrlForRestaurant(restaurant) {
-    return (`/img/${restaurant.photograph}`);
+    return (`/img/${restaurant.photograph}.jpg`);
   }
 
   /**
