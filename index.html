@@ -7,8 +7,9 @@
   <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/responsive.css">
+
   <!--This is guidline recommended for scripting linking -->
-  <script src="js/app.js"></script>
+
   <title>Restaurant Reviews</title>
 </head>
 
@@ -21,7 +22,7 @@
 
   <main id="maincontent" alt="mian content area">
     <section alt="map" id="map-container">
-      <div  role="application" id="map" taindex="-1"></div>
+      <div id="map" taindex="-1"></div>
     </section>
     <section class="mbody" >
       <div class="filter-options">
@@ -42,6 +43,7 @@
     </section>
   </main>
 
+ <script type="application/javascript" charset="utf-8" src="js/idb.js"></script>
   <script type="application/javascript" charset="utf-8" src="js/dbhelper.js"></script>
   <script type="application/javascript" charset="utf-8" src="js/main.js"></script>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCW15to_LipX9GOcHpHnOy1FC_D9WhjlPU&libraries=places&callback=initMap"></script>
@@ -51,19 +53,9 @@
     Copyright (c) 2017 <a href="/"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
   </footer>
 
+<script type="application/javascript" charset="utf-8" src="11111sw.js"></script>
+
+
 </body>
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/sw.js').then(function(registration) {
-      // Registration was successful
-      console.log('ServiceWorker registration successful with scope: ', registration.scope);
-    }, function(err) {
-      // registration failed :(
-      console.log('ServiceWorker registration failed: ', err);
-    });
-  });
-}
-</script>
 
 </html>
