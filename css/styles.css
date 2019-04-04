@@ -65,11 +65,6 @@ nav h1 a {
   letter-spacing: 10px;
   text-transform: uppercase;
 }
-nav.breadcrumb{
-  margin-left: 0px;
-  padding-left: 0;
-  height: 50px;
-}
 #breadcrumb {
     padding: 10px 40px 16px;
     list-style: none;
@@ -248,7 +243,6 @@ nav.breadcrumb{
   border-top: 1px solid #fff;
   /* changed setting to get usablity look for small screen */
   padding: 7px 0px 30px;
-  margin: auto;
   width: 100%;
 }
 #reviews-container {
@@ -256,7 +250,7 @@ nav.breadcrumb{
     width: 100%;
     /*padding: 30px 40px 80px; */
 }
-#reviews-container h3 {
+#reviews-container h2 {
   color: #f58500;
   font-size: 24pt;
   font-weight: 300;

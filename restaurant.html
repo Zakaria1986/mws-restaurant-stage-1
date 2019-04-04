@@ -15,21 +15,12 @@
   <header>
     <!-- Beginning nav -->
     <nav>
-     <ul>
-      <li>
-        <h1><a tabindex="1" href="/">Restaurant Reviews</a></h1>
-      </li>
-     </ul>
+      <h1><a tabindex="1" href="/">Restaurant Reviews</a></h1>
     </nav>
     <!-- Beginning breadcrumb -->
-    <nav aria-label="Breadcrumb" class="breadcrumb">
-      <ul id="breadcrumb" >
-        <li>
-          <a href="/">Home</a>
-        </li>
-      </ul>
-    </nav>
-
+    <ul id="breadcrumb" >
+      <li><a href="/">Home</a></li>
+    </ul>
     <!-- End breadcrumb -->
     <!-- End nav -->
   </header>
@@ -39,12 +30,12 @@
   <main id="maincontent" tabindex="1" class="rmaincontent">
     <!-- Beginning map -->
     <section id="map-container" alt="map">
-      <div  role="application" tabindex='-1' id="map"></div>
+      <div tabindex='-1' id="map"></div>
     </section>
     <!-- End map -->
     <!-- Beginning restaurant -->
     <section id="restaurant-container">
-      <h2 id="restaurant-name"></h2>
+      <h1 id="restaurant-name"></h1>
       <section tabindex="1" class="restaurant-imgdiv">
         <img id="restaurant-img" alt="image">
         <p id="restaurant-cuisine"></p>
@@ -80,17 +71,5 @@
   <!-- End scripts -->
 
 </body>
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/sw.js').then(function(registration) {
-      // Registration was successful
-      console.log('ServiceWorker registration successful with scope: ', registration.scope);
-    }, function(err) {
-      // registration failed :(
-      console.log('ServiceWorker registration failed: ', err);
-    });
-  });
-}
-</script>
+
 </html>

@@ -1,6 +1,7 @@
-/*
+/**
  * Common database helper functions.
  */
+
 class DBHelper {
   /**
    * Database URL.
@@ -8,47 +9,61 @@ class DBHelper {
    */
   static get DATABASE_URL() {
     const port = 1337 // Change this to your server port
-  return `http://localhost:${port}/restaurants`;
+    return `http://localhost:${port}/restaurants`;
   }
+
+  /**
+   * Fetch all restaurants.
+   */
+
+   /*
   static fetchRestaurants(callback) {
-    var dbPromise = idb.open("restaurant_stage-2",1, function(upgradeDB) {
-  upgradeDB.createObjectStore("restaurants", {keyPath:"id"});
-    });
-    // pulling data from the database
-    dbPromise.then(function(db){
-      var tx = db.transaction("restaurants");
-      var restaurantStore = tx.objectStore("restaurants");
-      return restaurantStore.getAll()
-    }).then(function(restaurants) {
-      // if data existing in the indexeddb, restaurant get added
-      if (restaurants.length !== 0) {
-        callback(null, restaurants)
-      } // if no data exist then fetch from the server and add to the indexeddb
-      else
-      {
-          fetch(DBHelper.DATABASE_URL)
-          .then(response => response.json())
-          .then(restaurants => {
-            // Put data in to indexeddb
-            dbPromise.then(function(db){
-              var tx = db.transaction("restaurants", "readwrite");
-              var restaurantStore = tx.objectStore("restaurants");
-              for (let restaurant of restaurants) {
-                restaurantStore.put(restaurant)
-              }
-              return tx.complete
-            }).then(function() { // successfully added restaurants to IndexDB
-              console.log("Restaurants added to Index DB successfully")
-            }).catch(function(error) { // failed adding restaurants to IndexDB
-              console.log(error)
-            }).finally(function(error) { // no matter whether adding to IndexDB was successfull or not - returning fetched data to caller
-              callback(null, restaurants)
-            })
-          })
-          .catch(error => callback(error, null))
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', DBHelper.DATABASE_URL);
+    xhr.onload = () => {
+      if (xhr.status === 200) { // Got a success response from server!
+        const json = JSON.parse(xhr.responseText);
+        const restaurants = json.restaurants;
+        callback(null, restaurants);
+      } else { // Oops!. Got an error from server.
+        const error = (`Request failed. Returned status of ${xhr.status}`);
+        callback(error, null);
       }
-    })
+    };
+    xhr.send();
   }
+  */ // this the fetch api retriving the data from port 1337
+  static fetchRestaurants(callback) {
+    return fetch(DBHelper.DATABASE_URL)
+    .then((response)=>response.json())
+    .then((restaurants)=> {
+
+      console.log('Response', restaurants);
+      callback(null, restaurants);
+      })
+      .catch((err)=>{
+        callback(err, null);
+      })
+  }
+  /**
+   * Fetch a restaurant by its ID.
+   */
+  static fetchRestaurantById(id, callback) {
+    // fetch all restaurants with proper error handling.
+    DBHelper.fetchRestaurants((error, restaurants) => {
+      if (error) {
+        callback(error, null);
+      } else {
+        const restaurant = restaurants.find(r => r.id == id);
+        if (restaurant) { // Got the restaurant
+          callback(null, restaurant);
+        } else { // Restaurant does not exist in the database
+          callback('Restaurant does not exist', null);
+        }
+      }
+    });
+  }
+
   /**
    * Fetch restaurants by a cuisine type with proper error handling.
    */
