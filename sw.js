@@ -33,7 +33,7 @@ self.addEventListener('install', function(event){
 	);
 });
 // Request to fetch the files from the server
-/*self.addEventListener('fetch', function(event) {
+self.addEventListener('fetch', function(event) {
   // respond with high jacks the request and takes control of the request
   event.respondWith(
     caches.open(staticCacheName).then(function(cache) {
@@ -53,19 +53,6 @@ self.addEventListener('install', function(event){
     }).catch(function(error) {
       console.log("Something went wrong with Service Worker fetch intercept", error);
     })
-  );
-}); */
-self.addEventListener('fetch', function(event) {
-  event.respondWith(
-    caches.match(event.request)
-      .then(function(response) {
-        // Cache hit - return response
-        if (response) {
-          return response;
-        }
-        return fetch(event.request);
-      }
-    )
   );
 });
 // update the old version of cache to new version

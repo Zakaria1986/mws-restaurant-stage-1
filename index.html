@@ -22,17 +22,17 @@
 
   <main id="maincontent" alt="mian content area">
     <section alt="map" id="map-container">
-      <div id="map" taindex="-1"></div>
+      <div id="map" aria-label="locations" role="application" taindex="-1"></div>
     </section>
     <section class="mbody" >
       <div class="filter-options">
           <h2 alt="Filter Results Heading">Filter Results</h2>
 
-          <select tabindex="1" alt="selet neigborhoods" id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()">
+          <select aria-label="neighborhoods-list" tabindex="1" alt="selet neigborhoods" id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()">
             <option value="all">All Neighborhoods</option>
           </select>
 
-          <select tabindex="1"  id="cuisines-select" name="cuisines" onchange="updateRestaurants()">
+          <select aria-label="cuisines-list" tabindex="1"  id="cuisines-select" name="cuisines" onchange="updateRestaurants()">
             <option value="all" alt="selet cuisines">All Cuisines</option>
           </select>
 
@@ -44,6 +44,7 @@
   </main>
 
   <script type="application/javascript" charset="utf-8" src="js/idb.js"></script>
+   <script type="application/javascript" charset="utf-8" src="js/swr.js"></script>
   <script type="application/javascript" charset="utf-8" src="js/dbhelper.js"></script>
   <script type="application/javascript" charset="utf-8" src="js/main.js"></script>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCW15to_LipX9GOcHpHnOy1FC_D9WhjlPU&libraries=places&callback=initMap"></script>
@@ -52,10 +53,6 @@
   <footer tabindex="1" id="footer" alt="copyright">
     Copyright (c) 2017 <a href="/"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
   </footer>
-
-
-
- <script type="application/javascript" charset="utf-8" src="js/swr.js"></script>
 </body>
 
 </html>
